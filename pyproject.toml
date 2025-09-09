@@ -1,0 +1,33 @@
+[tool.poetry]
+name = "commit-guardian"
+version = "0.1.0"
+description = "CLI to enforce commit hygiene, SPDX headers & LICENSE presence (Always-Green CI, MIT)."
+authors = ["CoderDeltaLAN <coderdeltalan.cargo784@8alias.com>"]
+license = "MIT"
+readme = "README.md"
+packages = [{include = "commit_guardian", from = "src"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+click = "^8.1"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.0"
+mypy = "^1.7"
+ruff = "^0.6"
+black = "^24.10"
+
+[tool.poetry.scripts]
+commit-guardian = "commit_guardian.cli:main"
+
+[tool.ruff]
+line-length = 100
+
+[tool.black]
+line-length = 100
+
+[tool.mypy]
+python_version = "3.11"
+warn_unused_ignores = true
+warn_redundant_casts = true
+disallow_untyped_defs = true
