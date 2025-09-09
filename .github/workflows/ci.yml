@@ -13,9 +13,21 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  noop:
+  python:
     if: ${{ (github.event_name == 'push' && startsWith(github.ref,'refs/heads/main')) || (github.event_name == 'pull_request' && github.event.pull_request.draft == false && contains(github.event.pull_request.labels.*.name,'ready')) }}
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ['3.11','3.12']
     steps:
       - uses: actions/checkout@v4
-      - run: echo "CI OK"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - run: python -m pip install -U pip
+      - run: pip install ruff black pytest mypy
+      - run: ruff check .
+      - run: black --check .
+      - run: pytest -q
+      - run: mypy .
