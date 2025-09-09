@@ -13,9 +13,24 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  noop:
+  python:
     if: ${{ (github.event_name == 'push' && startsWith(github.ref,'refs/heads/main')) || (github.event_name == 'pull_request' && github.event.pull_request.draft == false && contains(github.event.pull_request.labels.*.name,'ready')) }}
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        python-version: ['3.11','3.12']
+    runs-on: ${{ matrix.os }}
+    env:
+      PYTHONPATH: src
     steps:
       - uses: actions/checkout@v4
-      - run: echo "CI OK"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix['python-version'] }}
+      - uses: abatilo/actions-poetry@v3
+      - run: poetry install --no-interaction
+      - run: poetry run ruff check .
+      - run: poetry run ruff format --check .
+      - run: poetry run black --check .
+      - run: PYTHONPATH=src poetry run pytest -q
+      - run: poetry run mypy .
