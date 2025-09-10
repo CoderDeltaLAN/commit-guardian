@@ -132,7 +132,7 @@ poetry run mypy .
 
 ## 🔍 SEO Keywords
 
-always green ci, python package template, ruff black pytest mymy, github actions python,
+always green ci, python package template, ruff black pytest mypy, github actions python,
 code quality automation, codeql security scan, branch protection, required status checks,
 clean code workflow, python project skeleton
 
