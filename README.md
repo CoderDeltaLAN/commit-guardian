@@ -136,7 +136,7 @@ always green ci, python package template, ruff black pytest mypy, github actions
 code quality automation, codeql security scan, branch protection, required status checks,
 clean code workflow, python project skeleton
 
-## 💖 Donations & Sponsorship
+## 💚 Donations & Sponsorship
 
 Open‑source takes time. If this template saves you hours, consider supporting continued
 maintenance and polish. Thank you!  
